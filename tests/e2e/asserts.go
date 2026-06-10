@@ -2,6 +2,7 @@ package e2e_test
 
 import (
 	"encoding/json"
+	"strings"
 	"testing"
 
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
@@ -48,4 +49,17 @@ func AssertToolSuccess(t *testing.T, res *mcp_sdk.CallToolResult, err error) {
 		}
 		t.Fatalf("tool returned error: %v", errMsgs)
 	}
+}
+
+// ExtractErrorText joins all TextContent items from a CallToolResult into a single string.
+// Use this in error-path tests to assert on the combined error message.
+func ExtractErrorText(t *testing.T, res *mcp_sdk.CallToolResult) string {
+	t.Helper()
+	var parts []string
+	for _, c := range res.Content {
+		if tc, ok := c.(*mcp_sdk.TextContent); ok {
+			parts = append(parts, tc.Text)
+		}
+	}
+	return strings.Join(parts, " ")
 }
