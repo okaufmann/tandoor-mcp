@@ -14,6 +14,7 @@ import (
 func TestGetRecipeDetailsE2E(t *testing.T) {
 	// Arrange: Create a recipe first
 	ctx := context.Background()
+	defer infra.PurgeAndSeedDatabase()
 
 	createRes, createErr := infra.CallTool(ctx, fixture.Client, "create_tandoor_recipe", create_tandoor_recipe.Args{
 		Name:        "Details Test Recipe",

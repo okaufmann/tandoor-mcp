@@ -12,6 +12,7 @@ import (
 func TestGetRecipesE2E(t *testing.T) {
 	// Arrange
 	ctx := context.Background()
+	defer infra.PurgeAndSeedDatabase()
 
 	// Act
 	res, err := infra.CallTool(ctx, fixture.Client, "get_recipes", get_recipes.GetRecipesParams{

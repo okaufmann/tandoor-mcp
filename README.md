@@ -10,7 +10,7 @@ The Tandoor MCP server currently supports the following features:
 
 ### Planned Features (Unimplemented)
 **Recipes & Cooking**
-- ❌ **Steps**: Manage recipe steps (`step`).
+- ✅ **Steps**: Manage recipe steps (`step`).
 - ❌ **Ingredients**: Manage ingredients (`ingredient`).
 - ❌ **Cook Logs**: Track cooking history (`cook-log`, `view-log`).
 - ❌ **Imports**: Manage recipe imports (`recipe-import`, `bookmarklet-import`, `ingredient-parser`).

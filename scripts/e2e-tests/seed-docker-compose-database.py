@@ -7,12 +7,15 @@ from cookbook.models import Recipe, Space, UserSpace, UserPreference
 from django_scopes import scope, scopes_disabled
 from django.contrib.auth.models import Group
 
+from django.db import connection
+
 User = get_user_model()
 with scopes_disabled():
-    Recipe.objects.all().delete()
-    UserSpace.objects.all().delete()
-    Space.objects.all().delete()
-    User.objects.all().delete()
+    with connection.cursor() as cursor:
+        cursor.execute(f'TRUNCATE TABLE {Recipe._meta.db_table} RESTART IDENTITY CASCADE;')
+        cursor.execute(f'TRUNCATE TABLE {UserSpace._meta.db_table} RESTART IDENTITY CASCADE;')
+        cursor.execute(f'TRUNCATE TABLE {Space._meta.db_table} RESTART IDENTITY CASCADE;')
+        cursor.execute(f'TRUNCATE TABLE {User._meta.db_table} RESTART IDENTITY CASCADE;')
 
 user, _ = User.objects.get_or_create(username='admin', email='admin@example.com')
 user.set_password('admin')
