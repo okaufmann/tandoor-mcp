@@ -1,0 +1,66 @@
+services:
+  tandoor-db:
+    image: postgres:16-alpine
+    env_file:
+      - .env.e2e
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U tandoor -d tandoor"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  tandoor-web:
+    image: ghcr.io/tandoorrecipes/recipes:develop
+    env_file:
+      - .env.e2e
+    depends_on:
+      tandoor-db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:80/api/appinfo/"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  tandoor-setup:
+    image: ghcr.io/tandoorrecipes/recipes:develop
+    env_file:
+      - .env.e2e
+    depends_on:
+      tandoor-web:
+        condition: service_healthy
+    volumes:
+      - ./scripts/e2e-tests/seed-docker-compose-database.py:/opt/recipes/seed.py
+      - ./.env.e2e:/opt/recipes/.env
+    entrypoint: ["sh", "-c"]
+    command: >
+      "source /opt/recipes/venv/bin/activate && 
+       python manage.py shell < /opt/recipes/seed.py"
+
+  mcp-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TANDOOR_API_URL=http://tandoor-web:80
+      - TANDOOR_API_TOKEN=e2e_test_token
+    ports:
+      - "8080:8080"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "8080"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    depends_on:
+      tandoor-setup:
+        condition: service_completed_successfully
+
+  e2e-tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.e2e
+    environment:
+      - EXTERNAL_MCP_URL=http://mcp-api:8080/sse
+    depends_on:
+      mcp-api:
+        condition: service_healthy

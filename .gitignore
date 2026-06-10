@@ -1,0 +1,5 @@
+output/*
+/tandoor-mcp
+*.log
+.env
+
