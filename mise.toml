@@ -9,3 +9,7 @@ trap 'docker-compose down' EXIT
 docker-compose up --build --remove-orphans tandoor-db tandoor-web tandoor-setup mcp-api -d
 docker-compose run --rm e2e-tests
 """
+
+[tools]
+go = "latest"
+"go:golang.org/x/tools/gopls" = "latest"
