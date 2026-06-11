@@ -39,7 +39,7 @@ access_token, created = AccessToken.objects.get_or_create(
     defaults={
         "application": app,
         "expires": timezone.now() + timedelta(days=3650),
-        "scope": "read write"
+        "scope": "read write bookmarklet mealplan"
     }
 )
 

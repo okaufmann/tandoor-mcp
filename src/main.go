@@ -8,15 +8,20 @@ import (
 	"net/http"
 
 	"github.com/compilercomplied/tandoor-mcp/src/tandoor"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_bookmarklet_import"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_cook_log"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_ingredient"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_recipe_import"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_recipe"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_step"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_view_log"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_bookmarklet_imports"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_cook_logs"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipe_details"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipe_imports"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipes"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_view_logs"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/parse_ingredients"
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -50,6 +55,11 @@ func main() {
 	get_cook_logs.Register(server, client)
 	create_view_log.Register(server, client)
 	get_view_logs.Register(server, client)
+	create_bookmarklet_import.Register(server, client)
+	get_bookmarklet_imports.Register(server, client)
+	parse_ingredients.Register(server, client)
+	create_recipe_import.Register(server, client)
+	get_recipe_imports.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":
