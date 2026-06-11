@@ -8,11 +8,15 @@ import (
 	"net/http"
 
 	"github.com/compilercomplied/tandoor-mcp/src/tandoor"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_cook_log"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_ingredient"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_recipe"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_step"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_view_log"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_cook_logs"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipe_details"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipes"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_view_logs"
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -42,6 +46,10 @@ func main() {
 	get_recipe_details.Register(server, client)
 	create_tandoor_step.Register(server, client)
 	create_ingredient.Register(server, client)
+	create_cook_log.Register(server, client)
+	get_cook_logs.Register(server, client)
+	create_view_log.Register(server, client)
+	get_view_logs.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":

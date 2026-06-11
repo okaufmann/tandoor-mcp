@@ -1,8 +1,9 @@
 # Development Loop
 Every feature or bug fix implementation must follow this strict development loop:
 - **Implementation**: Write the feature code or fix following the architecture patterns (vertical slicing, thin client, generic abstractions).
-- **Testing**: All E2E tests must pass successfully using the `mise run test-e2e-docker` pipeline. A new E2E test **must** be added whenever changing behavior or adding a new feature.
+- **Testing**: All E2E tests must pass successfully using the `mise run test-e2e-docker` pipeline. A new E2E test **must** be added whenever changing behavior or adding a new feature. All validation (building, vetting) and test runs must be triggered through the `mise` tasks.
 - **Documentation**: Update `README.md` if necessary (e.g., when adding new features or modifying the setup process).
+
 
 # Architecture & Design Decisions
 
@@ -57,4 +58,10 @@ AssertToolSuccess(t, res, err)
 For manual testing and verifying MCP protocol behavior directly, a helper script is provided at `scripts/curl_mcp.sh`.
 - This script connects to the MCP server running locally (e.g. on `http://localhost:8081`) and performs raw JSON-RPC requests over the SSE transport.
 - Agents should use/edit this script when debugging or validating tool inputs/outputs instead of hand-rolling custom Python scripts or complex testing setups.
+
+## 7. OpenAPI Specification File
+A complete OpenAPI 3 schema for the Tandoor API is located at the root of the project: [tandoor-openapi-spec-version:2.6.9.json](file:///Users/gdario/code/tandoor-mcp/tandoor-openapi-spec-version:2.6.9.json).
+- Agents should refer to this file to inspect exact endpoint paths, request bodies, query parameters, and response schemas when implementing new features or debugging existing ones.
+- This spec was exported directly from a running Tandoor server instance.
+
 
