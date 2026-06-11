@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/compilercomplied/tandoor-mcp/src/tandoor"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_ingredient"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_recipe"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_step"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipe_details"
@@ -40,6 +41,7 @@ func main() {
 	create_tandoor_recipe.Register(server, client)
 	get_recipe_details.Register(server, client)
 	create_tandoor_step.Register(server, client)
+	create_ingredient.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":

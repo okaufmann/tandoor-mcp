@@ -52,3 +52,9 @@ res, err := infra.CallTool(ctx, fixture.Client, "get_recipes", get_recipes.GetRe
 })
 AssertToolSuccess(t, res, err)
 ```
+
+## 6. Manual Testing with curl
+For manual testing and verifying MCP protocol behavior directly, a helper script is provided at `scripts/curl_mcp.sh`.
+- This script connects to the MCP server running locally (e.g. on `http://localhost:8081`) and performs raw JSON-RPC requests over the SSE transport.
+- Agents should use/edit this script when debugging or validating tool inputs/outputs instead of hand-rolling custom Python scripts or complex testing setups.
+

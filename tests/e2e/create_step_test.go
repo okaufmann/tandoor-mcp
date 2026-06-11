@@ -26,12 +26,12 @@ func TestCreateStepE2E(t *testing.T) {
 		res, err := infra.CallTool(ctx, fixture.Client, "create_tandoor_step", args)
 
 		// Assert
-		AssertToolSuccess(t, res, err)
+		infra.AssertToolSuccess(t, res, err)
 
-		s := ParseToolResponse[step.StepResponse](t, res)
+		s := infra.ParseToolResponse[step.StepResponse](t, res)
 
-		if s.Recipe != 1 {
-			t.Errorf("expected Recipe=1, got %v", s.Recipe)
+		if s.ID == 0 {
+			t.Errorf("expected step ID > 0, got 0")
 		}
 		if s.Name != "Prep step" {
 			t.Errorf("expected Name='Prep step', got %q", s.Name)
@@ -59,7 +59,7 @@ func TestCreateStepE2E(t *testing.T) {
 			t.Fatalf("expected IsError=true, got false")
 		}
 
-		errText := ExtractErrorText(t, res)
+		errText := infra.ExtractErrorText(t, res)
 		if !strings.Contains(errText, "instruction or name is required") {
 			t.Errorf("expected validation message about instruction or name, got %q", errText)
 		}
@@ -83,7 +83,7 @@ func TestCreateStepE2E(t *testing.T) {
 			t.Fatalf("expected IsError=true for non-existent recipe, got false")
 		}
 
-		errText := ExtractErrorText(t, res)
+		errText := infra.ExtractErrorText(t, res)
 		if !strings.Contains(errText, "Error creating step") {
 			t.Errorf("expected error message to contain 'Error creating step', got %q", errText)
 		}

@@ -21,9 +21,9 @@ func TestCreateRecipeE2E(t *testing.T) {
 	})
 
 	// Assert
-	AssertToolSuccess(t, res, err)
+	infra.AssertToolSuccess(t, res, err)
 
-	recipe := ParseToolResponse[api_create_recipe.RecipeResponse](t, res)
+	recipe := infra.ParseToolResponse[api_create_recipe.RecipeResponse](t, res)
 
 	if recipe.Name != "Test Recipe 1" {
 		t.Errorf("expected name 'Test Recipe 1', got %q", recipe.Name)

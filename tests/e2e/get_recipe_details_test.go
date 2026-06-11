@@ -20,9 +20,9 @@ func TestGetRecipeDetailsE2E(t *testing.T) {
 		Name:        "Details Test Recipe",
 		Description: "A recipe for testing details",
 	})
-	AssertToolSuccess(t, createRes, createErr)
+	infra.AssertToolSuccess(t, createRes, createErr)
 
-	createdRecipe := ParseToolResponse[create_recipe.RecipeResponse](t, createRes)
+	createdRecipe := infra.ParseToolResponse[create_recipe.RecipeResponse](t, createRes)
 
 	// Act: Get its details
 	res, err := infra.CallTool(ctx, fixture.Client, "get_recipe_details", get_details_tool.Args{
@@ -30,8 +30,8 @@ func TestGetRecipeDetailsE2E(t *testing.T) {
 	})
 	
 	// Assert
-	AssertToolSuccess(t, res, err)
-	recipeDetails := ParseToolResponse[get_recipe_details.RecipeResponse](t, res)
+	infra.AssertToolSuccess(t, res, err)
+	recipeDetails := infra.ParseToolResponse[get_recipe_details.RecipeResponse](t, res)
 
 	if recipeDetails.ID != createdRecipe.ID {
 		t.Errorf("expected ID %d, got %d", createdRecipe.ID, recipeDetails.ID)

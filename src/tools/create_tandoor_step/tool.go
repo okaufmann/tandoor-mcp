@@ -41,8 +41,7 @@ func Register(server *mcp_sdk.Server, client *tandoor.Client) {
 			ingredients = []int{}
 		}
 
-		res, err := api_step.Create(ctx, client, api_step.StepParam{
-			RecipeID:    args.RecipeID,
+		res, err := api_step.Create(ctx, client, args.RecipeID, api_step.StepParam{
 			Name:        args.Name,
 			Instruction: args.Instruction,
 			Time:        args.Time,

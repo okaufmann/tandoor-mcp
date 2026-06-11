@@ -20,7 +20,7 @@ func TestGetRecipesE2E(t *testing.T) {
 	})
 
 	// Assert
-	AssertToolSuccess(t, res, err)
+	infra.AssertToolSuccess(t, res, err)
 
 	if len(res.Content) == 0 {
 		t.Fatalf("expected at least 1 recipe, but got empty content")
