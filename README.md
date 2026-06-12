@@ -14,10 +14,10 @@ The Tandoor MCP server currently supports the following features:
 - ✅ **Meal Plans**: Get existing meal plans or create new ones (`create_meal_plan`, `get_meal_plans`, `auto_plan`, `create_meal_type`, `get_meal_types`).
 - ✅ **Shopping List**: Manage shopping lists and entries (`get_shopping_list`, `add_shopping_list_item`, `update_shopping_list_item`, `remove_shopping_list_item`).
 - ✅ **Supermarkets**: Manage supermarkets and categories (`get_supermarkets`, `create_supermarket`, `get_supermarket_categories`, `create_supermarket_category`, `add_category_to_supermarket`).
+- ✅ **Storage**: Manage storage integrations (`get_storages`, `create_storage`).
 
 ### Planned Features (Unimplemented)
 **Inventory & Storage**
-- ❌ **Storage**: Manage storage locations (`storage`).
 - ❌ **Inventory**: Manage inventory locations, entries, and logs (`inventory-location`, `inventory-entry`, `inventory-log`).
 
 **Food & Metadata**

@@ -34,6 +34,8 @@ import (
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_supermarket_category"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_supermarket_categories"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_supermarkets"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_storage"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_storages"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_view_logs"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/parse_ingredients"
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
@@ -88,6 +90,8 @@ func main() {
 	get_supermarket_categories.Register(server, client)
 	create_supermarket_category.Register(server, client)
 	add_category_to_supermarket.Register(server, client)
+	create_storage.Register(server, client)
+	get_storages.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":
