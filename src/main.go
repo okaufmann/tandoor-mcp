@@ -36,6 +36,12 @@ import (
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_supermarkets"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_storage"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_storages"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_inventory_locations"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_inventory_location"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_inventory_entries"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_inventory_entry"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/update_inventory_entry"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_inventory_logs"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_view_logs"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/parse_ingredients"
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
@@ -92,6 +98,12 @@ func main() {
 	add_category_to_supermarket.Register(server, client)
 	create_storage.Register(server, client)
 	get_storages.Register(server, client)
+	get_inventory_locations.Register(server, client)
+	create_inventory_location.Register(server, client)
+	get_inventory_entries.Register(server, client)
+	create_inventory_entry.Register(server, client)
+	update_inventory_entry.Register(server, client)
+	get_inventory_logs.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":
