@@ -40,3 +40,13 @@ func ListInheritFields(ctx context.Context, c *tandoor.Client) (*[]FoodInheritFi
 	}
 	return res, nil
 }
+
+// Get calls GET /api/food/{id}/
+func Get(ctx context.Context, c *tandoor.Client, id int) (*FoodResponse, error) {
+	path := fmt.Sprintf("/api/food/%d/", id)
+	res, err := tandoor.Request[FoodResponse](ctx, c, "GET", path, nil, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get food %d: %w", id, err)
+	}
+	return res, nil
+}

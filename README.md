@@ -18,10 +18,10 @@ The Tandoor MCP server currently supports the following features:
 - ✅ **Inventory**: Manage inventory locations, entries, and logs (`get_inventory_locations`, `create_inventory_location`, `get_inventory_entries`, `create_inventory_entry`, `update_inventory_entry`, `get_inventory_logs`).
 - ✅ **Foods**: Query available foods and inheritance fields (`get_foods`, `create_food`, `get_food_inherit_fields`).
 - ✅ **Keywords**: Manage keywords (`get_keywords`, `create_keyword`).
+- ✅ **Units**: Manage units and unit conversions (`get_units`, `create_unit`, `get_unit_conversions`, `create_unit_conversion`).
 
 ### Planned Features (Unimplemented)
 **Food & Metadata**
-- ❌ **Units**: Query available units and conversions (`unit`, `unit-conversion`).
 - ❌ **Properties**: Manage food properties (`property`, `property-type`).
 
 **Collections & Sharing**
