@@ -7,23 +7,24 @@ import (
 	"log"
 
 	"github.com/compilercomplied/tandoor-mcp/src/tandoor"
+	api_ingredient "github.com/compilercomplied/tandoor-mcp/src/tandoor/features/ingredient"
 	api_step "github.com/compilercomplied/tandoor-mcp/src/tandoor/features/step"
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
 type Args struct {
-	RecipeID    int    `json:"recipe"`
-	Name        string `json:"name,omitempty"`
-	Instruction string `json:"instruction,omitempty"`
-	Time        *int   `json:"time,omitempty"`
-	Order       *int   `json:"order,omitempty"`
-	Ingredients []int  `json:"ingredients,omitempty"`
+	RecipeID    int    `json:"recipe" jsonschema:"ID of the recipe to add the step to."`
+	Name        string `json:"name,omitempty" jsonschema:"Optional name/header of the step."`
+	Instruction string `json:"instruction,omitempty" jsonschema:"Instructions/actions for the step."`
+	Time        *int   `json:"time,omitempty" jsonschema:"Optional time required in minutes."`
+	Order       *int   `json:"order,omitempty" jsonschema:"Optional order number for sorting steps."`
+	Ingredients []int  `json:"ingredients,omitempty" jsonschema:"List of existing ingredient IDs to associate with this step."`
 }
 
 func Register(server *mcp_sdk.Server, client *tandoor.Client) {
 	mcp_sdk.AddTool(server, &mcp_sdk.Tool{
 		Name:        "create_tandoor_step",
-		Description: "Create a new cooking step for a recipe in Tandoor.",
+		Description: "Create a new cooking step for a recipe in Tandoor. Associate existing ingredients by passing their IDs.",
 	}, func(ctx context.Context, req *mcp_sdk.CallToolRequest, args Args) (*mcp_sdk.CallToolResult, any, error) {
 		log.Printf("Executing create_tandoor_step. recipe=%v, instruction=%v", args.RecipeID, args.Instruction)
 
@@ -36,9 +37,18 @@ func Register(server *mcp_sdk.Server, client *tandoor.Client) {
 			}, nil, nil
 		}
 
-		ingredients := args.Ingredients
-		if ingredients == nil {
-			ingredients = []int{}
+		ingredients := make([]api_ingredient.IngredientResponse, len(args.Ingredients))
+		for i, id := range args.Ingredients {
+			ing, err := api_ingredient.Get(ctx, client, id)
+			if err != nil {
+				return &mcp_sdk.CallToolResult{
+					Content: []mcp_sdk.Content{
+						&mcp_sdk.TextContent{Text: fmt.Sprintf("Error fetching ingredient %d: %v", id, err)},
+					},
+					IsError: true,
+				}, nil, nil
+			}
+			ingredients[i] = *ing
 		}
 
 		res, err := api_step.Create(ctx, client, args.RecipeID, api_step.StepParam{
@@ -67,3 +77,4 @@ func Register(server *mcp_sdk.Server, client *tandoor.Client) {
 		}, nil, nil
 	})
 }
+

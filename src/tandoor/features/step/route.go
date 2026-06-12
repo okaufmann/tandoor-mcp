@@ -40,12 +40,7 @@ func Create(ctx context.Context, c *tandoor.Client, recipeID int, params StepPar
 	// Return the newly created step (the last one in the response array).
 	if len(updatedRecipe.Steps) > 0 {
 		lastStep := updatedRecipe.Steps[len(updatedRecipe.Steps)-1]
-		return &StepResponse{
-			ID:          lastStep.ID,
-			Instruction: lastStep.Instruction,
-			Name:        lastStep.Name,
-			Order:       lastStep.Order,
-		}, nil
+		return &lastStep, nil
 	}
 
 	return nil, fmt.Errorf("failed to extract created step from Tandoor response")

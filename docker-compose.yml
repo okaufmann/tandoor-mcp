@@ -65,6 +65,8 @@ services:
       - EXTERNAL_MCP_URL=http://mcp-api:8080/sse
       - LOG_FORMAT=plain
       - LOG_HTTP_BODY=false
+      - TANDOOR_API_URL=http://tandoor-web:80
+      - TANDOOR_API_TOKEN=e2e_test_token
     depends_on:
       mcp-api:
         condition: service_healthy
