@@ -23,7 +23,7 @@ The Tandoor MCP server currently supports the following features:
 
 ## Supported Transports
 - **stdio**: Standard input/output transport for the Claude Desktop integration.
-- **sse**: Server-Sent Events transport via HTTP, useful for E2E testing and standalone debugging.
+- **sse**: Server-Sent Events transport via HTTP.
 
 ## How to Configure
 You need to set up the following environment variables. You can add them to a `.env` file in the root directory:
@@ -145,3 +145,8 @@ If your client supports HTTP SSE, run the server in `sse` mode and add the serve
   }
 }
 ```
+
+
+### Development
+
+Mise is enough to work with this repo. Running and validating can be done through the E2E tests, which are executed through the docker-compose workflow found in mise.
