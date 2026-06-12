@@ -44,6 +44,9 @@ import (
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_inventory_logs"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_view_logs"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/parse_ingredients"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_foods"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_food"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_food_inherit_fields"
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -104,6 +107,9 @@ func main() {
 	create_inventory_entry.Register(server, client)
 	update_inventory_entry.Register(server, client)
 	get_inventory_logs.Register(server, client)
+	get_foods.Register(server, client)
+	create_food.Register(server, client)
+	get_food_inherit_fields.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":

@@ -1,0 +1,42 @@
+package food
+
+import (
+	"context"
+	"fmt"
+
+	"github.com/compilercomplied/tandoor-mcp/src/tandoor"
+)
+
+// Create calls POST /api/food/
+func Create(ctx context.Context, c *tandoor.Client, params FoodParam) (*FoodResponse, error) {
+	res, err := tandoor.Request[FoodResponse](ctx, c, "POST", "/api/food/", nil, params)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create food: %w", err)
+	}
+	return res, nil
+}
+
+// List calls GET /api/food/
+func List(ctx context.Context, c *tandoor.Client, params ListParams) (*FoodListResponse, error) {
+	qb := tandoor.NewQuery().
+		Add("query", params.Query).
+		Add("root", params.Root).
+		Add("tree", params.Tree).
+		Add("page", params.Page).
+		Add("page_size", params.PageSize)
+
+	res, err := tandoor.Request[FoodListResponse](ctx, c, "GET", "/api/food/", qb.Values(), nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to list foods: %w", err)
+	}
+	return res, nil
+}
+
+// ListInheritFields calls GET /api/food-inherit-field/
+func ListInheritFields(ctx context.Context, c *tandoor.Client) (*[]FoodInheritFieldResponse, error) {
+	res, err := tandoor.Request[[]FoodInheritFieldResponse](ctx, c, "GET", "/api/food-inherit-field/", nil, nil)
+	if err != nil {
+		return nil, fmt.Errorf("failed to list food inherit fields: %w", err)
+	}
+	return res, nil
+}
