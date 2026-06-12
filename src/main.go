@@ -47,6 +47,8 @@ import (
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_foods"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_food"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_food_inherit_fields"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_keywords"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_keyword"
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -110,6 +112,8 @@ func main() {
 	get_foods.Register(server, client)
 	create_food.Register(server, client)
 	get_food_inherit_fields.Register(server, client)
+	get_keywords.Register(server, client)
+	create_keyword.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":
