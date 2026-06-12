@@ -49,6 +49,8 @@ You need to set up the following environment variables. You can add them to a `.
 TANDOOR_API_URL=http://localhost:8080/api
 TANDOOR_API_TOKEN=your_token_here
 TANDOOR_API_SPACE_ID=1
+LOG_FORMAT=plain # Required. Can be 'plain' or 'json' (for structured logging).
+LOG_HTTP_BODY=false # Required. Set to 'true' to log HTTP request and response bodies, or 'false' to disable.
 ```
 
 ## How to Launch
@@ -77,6 +79,8 @@ The server requires your Tandoor instance URL and API token. Create a `.env` fil
 ```env
 TANDOOR_API_URL=https://your-tandoor-instance.com
 TANDOOR_API_TOKEN=your_tandoor_api_token
+LOG_FORMAT=plain # Required. Can be 'plain' or 'json' (for structured logging).
+LOG_HTTP_BODY=false # Required. Set to 'true' to log HTTP request and response bodies, or 'false' to disable.
 ```
 
 ### Running via Docker Compose (Recommended)

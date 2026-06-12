@@ -44,6 +44,8 @@ services:
     environment:
       - TANDOOR_API_URL=http://tandoor-web:80
       - TANDOOR_API_TOKEN=e2e_test_token
+      - LOG_FORMAT=plain
+      - LOG_HTTP_BODY=false
     ports:
       - "8080:8080"
     healthcheck:
@@ -61,6 +63,8 @@ services:
       dockerfile: Dockerfile.e2e
     environment:
       - EXTERNAL_MCP_URL=http://mcp-api:8080/sse
+      - LOG_FORMAT=plain
+      - LOG_HTTP_BODY=false
     depends_on:
       mcp-api:
         condition: service_healthy

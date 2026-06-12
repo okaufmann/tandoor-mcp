@@ -20,14 +20,20 @@ type Client struct {
 	httpClient *http.Client
 }
 
-func NewClient(baseURL, apiToken string) *Client {
+func NewClient(baseURL, apiToken string, logHTTPBody bool) *Client {
 	baseURL = strings.TrimSuffix(baseURL, "/")
 
 	authHeader := "Bearer " + apiToken
 
-	transport := &authTransport{
+	var transport http.RoundTripper = &authTransport{
 		token: authHeader,
 		next:  http.DefaultTransport,
+	}
+
+	if logHTTPBody {
+		transport = &loggingTransport{
+			next: transport,
+		}
 	}
 
 	return &Client{

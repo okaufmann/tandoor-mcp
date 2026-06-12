@@ -5,7 +5,11 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"log/slog"
 	"net/http"
+	"os"
+	"strings"
+
 
 	"github.com/compilercomplied/tandoor-mcp/src/tandoor"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/auto_plan"
@@ -63,6 +67,9 @@ import (
 func main() {
 	LoadEnv()
 
+	logFormat := GetEnv("LOG_FORMAT")
+	SetupLogging(logFormat)
+
 	transportFlag := flag.String("transport", "sse", "Transport to use: 'sse' (HTTP) or 'stdio'")
 	hostFlag := flag.String("host", "0.0.0.0", "Host to listen on (only for SSE transport)")
 	portFlag := flag.String("port", "8080", "Port to listen on (only for SSE transport)")
@@ -70,8 +77,9 @@ func main() {
 
 	apiURL := GetEnv("TANDOOR_API_URL")
 	apiToken := GetEnv("TANDOOR_API_TOKEN")
+	logHTTPBody := GetEnv("LOG_HTTP_BODY") == "true"
 
-	client := tandoor.NewClient(apiURL, apiToken)
+	client := tandoor.NewClient(apiURL, apiToken, logHTTPBody)
 
 	server := mcp_sdk.NewServer(
 		&mcp_sdk.Implementation{
@@ -157,3 +165,15 @@ func main() {
 		log.Fatalf("Unknown transport %q. Supported transports: stdio, sse", *transportFlag)
 	}
 }
+
+// SetupLogging configures the logging format.
+// If format is "json", it sets slog.JSONHandler as the default and redirects standard logs to it.
+func SetupLogging(format string) {
+	if strings.ToLower(format) == "json" {
+		handler := slog.NewJSONHandler(os.Stderr, nil)
+		slog.SetDefault(slog.New(handler))
+		log.SetFlags(0)
+		log.SetOutput(slog.NewLogLogger(handler, slog.LevelInfo).Writer())
+	}
+}
+

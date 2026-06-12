@@ -63,8 +63,10 @@ func SetupFixture() (*Fixture, error) {
 	// Start the MCP server using SSE transport
 	cmd := exec.CommandContext(ctx, tmpBin, "-transport", "sse", "-port", "8081")
 	cmd.Dir = repoRoot
-	// We map stdout/err so we can see server logs, but since it's the direct child, 
-	// killing it will release the FDs correctly.
+	cmd.Env = append(os.Environ(),
+		"LOG_FORMAT=plain",
+		"LOG_HTTP_BODY=false",
+	)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 
