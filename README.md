@@ -8,7 +8,7 @@ The Tandoor MCP server currently supports the following features:
 - ✅ **Create Recipe**: Create a new recipe in Tandoor (`create_tandoor_recipe`).
 - ✅ **Get Recipe Details**: Retrieve full details of a specific recipe (`get_recipe_details`).
 - ✅ **Steps**: Manage recipe steps (`create_tandoor_step`*).
-- ✅ **Ingredients**: Manage ingredients (`create_ingredient`).
+- ✅ **Ingredients**: Manage ingredients (`create_ingredient`*).
 - ✅ **Cook Logs**: Track cooking history (`create_cook_log`, `get_cook_logs`, `create_view_log`, `get_view_logs`).
 - ✅ **Imports**: Manage recipe imports (`create_recipe_import`, `get_recipe_imports`, `create_bookmarklet_import`, `get_bookmarklet_imports`, `parse_ingredients`).
 - ✅ **Meal Plans**: Get existing meal plans or create new ones (`create_meal_plan`, `get_meal_plans`, `auto_plan`, `create_meal_type`, `get_meal_types`).

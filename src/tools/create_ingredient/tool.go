@@ -17,14 +17,15 @@ type Args struct {
 	UnitName string  `json:"unit_name"`
 	Amount   float64 `json:"amount"`
 	Note     string  `json:"note,omitempty"`
+	RecipeID *int    `json:"recipe_id,omitempty" jsonschema:"Optional recipe ID to associate the ingredient with, preventing it from becoming a floating ingredient."`
 }
 
 func Register(server *mcp_sdk.Server, client *tandoor.Client) {
 	mcp_sdk.AddTool(server, &mcp_sdk.Tool{
 		Name:        "create_ingredient",
-		Description: "Create a new ingredient in Tandoor (POST /api/ingredient/). Food and unit are created automatically if they do not yet exist. Returns the created ingredient.",
+		Description: "Create a new ingredient in Tandoor. Food and unit are created automatically if they do not yet exist. If recipe_id is provided, the ingredient is associated with that recipe to prevent it from becoming a floating ingredient. Returns the created ingredient.",
 	}, func(ctx context.Context, req *mcp_sdk.CallToolRequest, args Args) (*mcp_sdk.CallToolResult, any, error) {
-		log.Printf("Executing create_ingredient. food=%q, unit=%q, amount=%v", args.FoodName, args.UnitName, args.Amount)
+		log.Printf("Executing create_ingredient. food=%q, unit=%q, amount=%v, recipe_id=%v", args.FoodName, args.UnitName, args.Amount, args.RecipeID)
 
 		if args.FoodName == "" {
 			return &mcp_sdk.CallToolResult{
@@ -52,10 +53,11 @@ func Register(server *mcp_sdk.Server, client *tandoor.Client) {
 		}
 
 		res, err := api_ingredient.Create(ctx, client, api_ingredient.IngredientParam{
-			Food:   api_ingredient.FoodRef{Name: args.FoodName},
-			Unit:   api_ingredient.UnitRef{Name: args.UnitName},
-			Amount: args.Amount,
-			Note:   args.Note,
+			Food:     api_ingredient.FoodRef{Name: args.FoodName},
+			Unit:     api_ingredient.UnitRef{Name: args.UnitName},
+			Amount:   args.Amount,
+			Note:     args.Note,
+			RecipeID: args.RecipeID,
 		})
 		if err != nil {
 			return &mcp_sdk.CallToolResult{

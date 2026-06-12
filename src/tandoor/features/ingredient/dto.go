@@ -20,6 +20,7 @@ type IngredientParam struct {
 	Note     string  `json:"note,omitempty"`
 	Order    *int    `json:"order,omitempty"`
 	NoAmount bool    `json:"no_amount,omitempty"`
+	RecipeID *int    `json:"-"`
 }
 
 // IngredientResponse is the response from POST /api/ingredient/.

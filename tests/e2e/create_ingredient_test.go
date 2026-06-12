@@ -2,10 +2,13 @@ package e2e_test
 
 import (
 	"context"
+	"os"
 	"strings"
 	"testing"
 
+	"github.com/compilercomplied/tandoor-mcp/src/tandoor"
 	"github.com/compilercomplied/tandoor-mcp/src/tandoor/features/ingredient"
+	"github.com/compilercomplied/tandoor-mcp/src/tandoor/features/step"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_ingredient"
 	"github.com/compilercomplied/tandoor-mcp/tests/e2e/infra"
 )
@@ -135,6 +138,62 @@ func TestCreateIngredientE2E(t *testing.T) {
 		errText := infra.ExtractErrorText(t, res)
 		if !strings.Contains(errText, "amount must be greater than 0") {
 			t.Errorf("expected validation message about amount, got %q", errText)
+		}
+	})
+
+	t.Run("HappyPath_WithRecipeID", func(t *testing.T) {
+		recipeID := 1
+		// Arrange
+		args := create_ingredient.Args{
+			FoodName: "Carrot",
+			UnitName: "pieces",
+			Amount:   4,
+			RecipeID: &recipeID,
+		}
+
+		// Act
+		res, err := infra.CallTool(ctx, fixture.Client, "create_ingredient", args)
+
+		// Assert
+		infra.AssertToolSuccess(t, res, err)
+
+		ing := infra.ParseToolResponse[ingredient.IngredientResponse](t, res)
+
+		if ing.ID == 0 {
+			t.Errorf("expected ingredient ID > 0, got 0")
+		}
+		if ing.Food.Name != "Carrot" {
+			t.Errorf("expected Food.Name='Carrot', got %q", ing.Food.Name)
+		}
+
+		// 1. Verify we can GET the ingredient (since it's associated with a recipe, it won't 404)
+		tandoorClient := tandoor.NewClient(os.Getenv("TANDOOR_API_URL"), os.Getenv("TANDOOR_API_TOKEN"), false)
+		fetchedIng, err := ingredient.Get(ctx, tandoorClient, ing.ID)
+		if err != nil {
+			t.Fatalf("failed to GET non-floating ingredient: %v", err)
+		}
+		if fetchedIng.ID != ing.ID {
+			t.Errorf("expected fetched ingredient ID %d, got %d", ing.ID, fetchedIng.ID)
+		}
+
+		// 2. Fetch recipe details and verify the ingredient is in the first step
+		recipeStepsRes, err := tandoor.Request[step.RecipeSteps](ctx, tandoorClient, "GET", "/api/recipe/1/", nil, nil)
+		if err != nil {
+			t.Fatalf("failed to GET recipe steps: %v", err)
+		}
+		if len(recipeStepsRes.Steps) == 0 {
+			t.Fatalf("expected recipe to have at least one step")
+		}
+
+		found := false
+		for _, stepIng := range recipeStepsRes.Steps[0].Ingredients {
+			if stepIng.ID == ing.ID {
+				found = true
+				break
+			}
+		}
+		if !found {
+			t.Errorf("expected ingredient %d to be in the first step of recipe %d", ing.ID, recipeID)
 		}
 	})
 }
