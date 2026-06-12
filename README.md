@@ -21,24 +21,6 @@ The Tandoor MCP server currently supports the following features:
 - ✅ **Units**: Manage units and unit conversions (`get_units`, `create_unit`, `get_unit_conversions`, `create_unit_conversion`).
 - ✅ **Properties**: Manage food properties (`get_property_types`, `create_property_type`, `get_properties`, `create_property`).
 
-### Planned Features (Unimplemented)
-**Food & Metadata**
-
-**Collections & Sharing**
-- ❌ **Recipe Books**: Manage recipe books and entries (`recipe-book`, `recipe-book-entry`).
-- ❌ **Invites**: Manage invite links (`invite-link`).
-
-**System & Users**
-- ❌ **Spaces**: Manage spaces and household configuration (`space`, `user-space`, `household`, `group`).
-- ❌ **Users**: Manage users, preferences, and files (`user`, `user-preference`, `user-file`).
-- ❌ **Search Config**: Manage search preferences and fields (`search-fields`, `search-preference`, `custom-filter`).
-
-**Integrations & Admin**
-- ❌ **Integrations**: Manage syncs, connectors, and automation (`sync`, `sync-log`, `connector-config`, `automation`).
-- ❌ **Logs**: Access system logs (`import-log`, `export-log`).
-- ❌ **AI & Tokens**: Manage AI features and API tokens (`ai-provider`, `ai-log`, `access-token`).
-- ❌ **Server**: Manage server settings and localization (`server-settings`, `localization`).
-
 ## Supported Transports
 - **stdio**: Standard input/output transport for the Claude Desktop integration.
 - **sse**: Server-Sent Events transport via HTTP, useful for E2E testing and standalone debugging.
