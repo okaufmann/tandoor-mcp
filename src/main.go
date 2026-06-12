@@ -8,15 +8,20 @@ import (
 	"net/http"
 
 	"github.com/compilercomplied/tandoor-mcp/src/tandoor"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/auto_plan"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_bookmarklet_import"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_cook_log"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_ingredient"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_meal_plan"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_meal_type"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_recipe_import"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_recipe"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_step"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_view_log"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_bookmarklet_imports"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_cook_logs"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_meal_plans"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_meal_types"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipe_details"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipe_imports"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipes"
@@ -60,6 +65,11 @@ func main() {
 	parse_ingredients.Register(server, client)
 	create_recipe_import.Register(server, client)
 	get_recipe_imports.Register(server, client)
+	create_meal_plan.Register(server, client)
+	get_meal_plans.Register(server, client)
+	auto_plan.Register(server, client)
+	create_meal_type.Register(server, client)
+	get_meal_types.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":

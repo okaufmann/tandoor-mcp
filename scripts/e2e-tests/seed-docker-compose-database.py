@@ -53,6 +53,6 @@ space = us.space
 
 # Create a test recipe in the space
 with scope(space=space):
-    Recipe.objects.get_or_create(name='Tandoori Chicken', created_by=user, space=space, defaults={'description': 'E2E test'})
+    Recipe.objects.get_or_create(name='Tandoori Chicken', created_by=user, space=space, defaults={'description': 'E2E test', 'internal': True})
 
 print("Successfully seeded E2E user, token, space, and recipe.")
