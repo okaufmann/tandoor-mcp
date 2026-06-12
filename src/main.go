@@ -25,6 +25,15 @@ import (
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipe_details"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipe_imports"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_recipes"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/add_shopping_list_item"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_shopping_list"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/remove_shopping_list_item"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/update_shopping_list_item"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/add_category_to_supermarket"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_supermarket"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_supermarket_category"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_supermarket_categories"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_supermarkets"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_view_logs"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/parse_ingredients"
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
@@ -70,6 +79,15 @@ func main() {
 	auto_plan.Register(server, client)
 	create_meal_type.Register(server, client)
 	get_meal_types.Register(server, client)
+	get_shopping_list.Register(server, client)
+	add_shopping_list_item.Register(server, client)
+	update_shopping_list_item.Register(server, client)
+	remove_shopping_list_item.Register(server, client)
+	get_supermarkets.Register(server, client)
+	create_supermarket.Register(server, client)
+	get_supermarket_categories.Register(server, client)
+	create_supermarket_category.Register(server, client)
+	add_category_to_supermarket.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":

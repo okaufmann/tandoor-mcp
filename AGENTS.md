@@ -62,6 +62,12 @@ For manual testing and verifying MCP protocol behavior directly, a helper script
 ## 7. OpenAPI Specification File
 A complete OpenAPI 3 schema for the Tandoor API is located at the root of the project: [tandoor-openapi-spec-version:2.6.9.json](file:///Users/gdario/code/tandoor-mcp/tandoor-openapi-spec-version:2.6.9.json).
 - Agents should refer to this file to inspect exact endpoint paths, request bodies, query parameters, and response schemas when implementing new features or debugging existing ones.
+- Agents must avoid using `docker exec` or Python scripts for API schema exploration to minimize manual tool/command authorization prompts.
+- The preferred way to explore the API is by using the OpenAPI specification file (`tandoor-openapi-spec-version:2.6.9.json`) and `jq` locally.
+- **Example**: To find paths matching a specific keyword (e.g. "shopping"):
+  ```bash
+  jq '.paths | keys[] | select(contains("shopping"))' tandoor-openapi-spec-version:2.6.9.json
+  ```
 - This spec was exported directly from a running Tandoor server instance.
 
 

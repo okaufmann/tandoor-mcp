@@ -12,12 +12,10 @@ The Tandoor MCP server currently supports the following features:
 - ✅ **Cook Logs**: Track cooking history (`create_cook_log`, `get_cook_logs`, `create_view_log`, `get_view_logs`).
 - ✅ **Imports**: Manage recipe imports (`create_recipe_import`, `get_recipe_imports`, `create_bookmarklet_import`, `get_bookmarklet_imports`, `parse_ingredients`).
 - ✅ **Meal Plans**: Get existing meal plans or create new ones (`create_meal_plan`, `get_meal_plans`, `auto_plan`, `create_meal_type`, `get_meal_types`).
+- ✅ **Shopping List**: Manage shopping lists and entries (`get_shopping_list`, `add_shopping_list_item`, `update_shopping_list_item`, `remove_shopping_list_item`).
+- ✅ **Supermarkets**: Manage supermarkets and categories (`get_supermarkets`, `create_supermarket`, `get_supermarket_categories`, `create_supermarket_category`, `add_category_to_supermarket`).
 
 ### Planned Features (Unimplemented)
-**Meal Planning & Shopping**
-- ❌ **Shopping List**: Manage shopping lists and entries (`shopping-list`, `shopping-list-entry`, `shopping-list-recipe`).
-- ❌ **Supermarkets**: Manage supermarkets and categories (`supermarket`, `supermarket-category`, `supermarket-category-relation`).
-
 **Inventory & Storage**
 - ❌ **Storage**: Manage storage locations (`storage`).
 - ❌ **Inventory**: Manage inventory locations, entries, and logs (`inventory-location`, `inventory-entry`, `inventory-log`).
