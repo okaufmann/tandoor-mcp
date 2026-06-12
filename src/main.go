@@ -53,6 +53,10 @@ import (
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_unit"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/get_unit_conversions"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_unit_conversion"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_property_types"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_property_type"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/get_properties"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_property"
 	mcp_sdk "github.com/modelcontextprotocol/go-sdk/mcp"
 )
 
@@ -122,6 +126,10 @@ func main() {
 	create_unit.Register(server, client)
 	get_unit_conversions.Register(server, client)
 	create_unit_conversion.Register(server, client)
+	get_property_types.Register(server, client)
+	create_property_type.Register(server, client)
+	get_properties.Register(server, client)
+	create_property.Register(server, client)
 
 	switch *transportFlag {
 	case "stdio":

@@ -19,10 +19,10 @@ The Tandoor MCP server currently supports the following features:
 - ✅ **Foods**: Query available foods and inheritance fields (`get_foods`, `create_food`, `get_food_inherit_fields`).
 - ✅ **Keywords**: Manage keywords (`get_keywords`, `create_keyword`).
 - ✅ **Units**: Manage units and unit conversions (`get_units`, `create_unit`, `get_unit_conversions`, `create_unit_conversion`).
+- ✅ **Properties**: Manage food properties (`get_property_types`, `create_property_type`, `get_properties`, `create_property`).
 
 ### Planned Features (Unimplemented)
 **Food & Metadata**
-- ❌ **Properties**: Manage food properties (`property`, `property-type`).
 
 **Collections & Sharing**
 - ❌ **Recipe Books**: Manage recipe books and entries (`recipe-book`, `recipe-book-entry`).
