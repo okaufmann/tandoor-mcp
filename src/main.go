@@ -18,6 +18,7 @@ import (
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_ingredient"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_meal_plan"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_meal_type"
+	"github.com/compilercomplied/tandoor-mcp/src/tools/create_recipe"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_recipe_import"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_recipe"
 	"github.com/compilercomplied/tandoor-mcp/src/tools/create_tandoor_step"
@@ -90,6 +91,7 @@ func main() {
 	)
 
 	get_recipes.Register(server, client)
+	create_recipe.Register(server, client)
 	create_tandoor_recipe.Register(server, client)
 	get_recipe_details.Register(server, client)
 	create_tandoor_step.Register(server, client)
