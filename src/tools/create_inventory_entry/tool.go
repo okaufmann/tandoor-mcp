@@ -15,9 +15,10 @@ import (
 
 type Args struct {
 	InventoryLocationID int     `json:"inventory_location_id"`
-	FoodNameOrID        any     `json:"food_name_or_id"`
+	// Accept either a food name or a numeric ID as a string (e.g. "Milk" or "12").
+	FoodNameOrID        string  `json:"food_name_or_id" jsonschema:"Food name or numeric food ID."`
 	Amount              string  `json:"amount"`
-	UnitNameOrID        any     `json:"unit_name_or_id"`
+	UnitNameOrID        string  `json:"unit_name_or_id" jsonschema:"Unit name or numeric unit ID."`
 	SubLocation         *string `json:"sub_location,omitempty"`
 	Code                *string `json:"code,omitempty"`
 	Expires             *string `json:"expires,omitempty"`
