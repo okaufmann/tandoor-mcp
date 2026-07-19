@@ -8,7 +8,8 @@ COPY . .
 RUN CGO_ENABLED=0 go build -o tandoor-mcp ./src/
 
 FROM debian:bookworm-slim
-RUN apt-get update && apt-get install -y netcat-openbsd && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates netcat-openbsd \
+	&& rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY --from=builder /app/tandoor-mcp .
 
