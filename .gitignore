@@ -4,3 +4,4 @@ dist/*
 *.log
 .env
 
+bin/tandoor-mcp
