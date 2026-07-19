@@ -71,7 +71,7 @@ func main() {
 	logFormat := GetEnv("LOG_FORMAT")
 	SetupLogging(logFormat)
 
-	transportFlag := flag.String("transport", "sse", "Transport to use: 'sse' (HTTP) or 'stdio'")
+	transportFlag := flag.String("transport", "sse", "Transport to use: 'http' (Streamable HTTP), 'sse' (legacy HTTP) or 'stdio'")
 	hostFlag := flag.String("host", "0.0.0.0", "Host to listen on (only for SSE transport)")
 	portFlag := flag.String("port", "8080", "Port to listen on (only for SSE transport)")
 	flag.Parse()
@@ -145,6 +145,21 @@ func main() {
 	case "stdio":
 		log.Println("Starting MCP server on stdio transport...")
 		if err := server.Run(context.Background(), &mcp_sdk.StdioTransport{}); err != nil {
+			log.Fatalf("Server failed: %v", err)
+		}
+	case "http":
+		addr := fmt.Sprintf("%s:%s", *hostFlag, *portFlag)
+		log.Printf("Starting MCP server on Streamable HTTP transport at http://%s ...", addr)
+		log.Println("MCP Endpoint: /mcp")
+
+		httpHandler := mcp_sdk.NewStreamableHTTPHandler(func(request *http.Request) *mcp_sdk.Server {
+			return server
+		}, &mcp_sdk.StreamableHTTPOptions{Stateless: true})
+
+		http.Handle("/mcp", httpHandler)
+		http.Handle("/mcp/", httpHandler)
+
+		if err := http.ListenAndServe(addr, nil); err != nil {
 			log.Fatalf("Server failed: %v", err)
 		}
 	case "sse":
